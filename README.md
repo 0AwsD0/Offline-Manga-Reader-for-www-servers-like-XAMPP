@@ -22,7 +22,10 @@ For example, 'localhost/MANGA/Manga name here/'.
 If you set up custom port you need to include it. For example: 'localhost:88'.
 
 ## Possible problems.
-I wrote it on Windows for windows, I didn't test it on Linux. It should be fine.
+I wrote it on Windows for windows, I didn't test it on Linux. It should be fine. One line that can cause troubles:
+```sh
+for($i = 0; $i < $filecount-4; $i++)
+```
 
 As shown below the hard-coded name for folders containing image files for manga is constructed like this: 'Episode X'
 That requires you to have folders named properly: 'Episode 1' 'Episode 2' ... 'Episode 171' ...
