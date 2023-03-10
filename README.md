@@ -7,6 +7,8 @@ If you like to use it offline on your PC go on and download it.
 It's simple, easy and MADE FOR LOCAL USE.
 You can use it and modify it for your needs.
 If you make changes to the code and you want to share it, make a branch of this project.
+You have to include link to original repository on the top as shown here: 
+Original repository: [link]
 ### Remember if you like something and it's online resource, save it! 
 
 ## How to use
