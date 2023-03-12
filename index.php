@@ -14,7 +14,7 @@
              $filecount = count(glob("" . "*"));
 
              try{
-                for($i = 0; $i < $filecount-4; $i++){
+                for($i = 0; $i < $filecount-3; $i++){
                     ?>
                         <button class="episode_button" onclick="load_images(<?php echo($i+1); ?>);"> <?php echo($i+1); ?> </button>
                     <?php
