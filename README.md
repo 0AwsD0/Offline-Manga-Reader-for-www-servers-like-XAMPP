@@ -31,13 +31,17 @@ for($i = 0; $i < $filecount-3; $i++)
 
 As shown below the hard-coded name for folders containing image files for manga is constructed like this: 'Episode X'
 That requires you to have folders named properly: 'Episode 1' 'Episode 2' ... 'Episode 171' ...
-I made it that way because downloader that I use - HakuNeko Desktop - is making folders like that while downloading manga.
+I made it that way because downloader that I use - HakuNeko Desktop - is making folders like that while downloading manga. //not always - sometimes it goes 'Chapter X' etc. - replace 'Episode ' witch 'Chapter ' in code below:
 - images.php
 ```sh
 $directory = "Episode ".$ep_number;
                  $filecount = count(scandir($directory, SCANDIR_SORT_DESCENDING));
                  $images = preg_grep('~\.(jpeg|jpg|png)$~', scandir($directory));
                  echo(json_encode($images));
+```
+- index.php
+```sh
+img.setAttribute('src', 'Chapter '+ep_number+"/"+file_array[i]);
 ```
 
 Have fun reading your manga offline!
