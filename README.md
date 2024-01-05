@@ -41,7 +41,7 @@ $directory = "Episode ".$ep_number;
 ```
 - index.php
 ```sh
-img.setAttribute('src', 'Chapter '+ep_number+"/"+file_array[i]);
+img.setAttribute('src', Episode '+ep_number+"/"+file_array[i]);
 ```
 
 Have fun reading your manga offline!
