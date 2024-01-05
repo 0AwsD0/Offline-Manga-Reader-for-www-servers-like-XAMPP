@@ -12,7 +12,7 @@ Original repository: [link]
 ### Remember if you like something and it's online resource, save it! 
 
 ## How to use
-Put those files together or combine them into one file and drop them into directory with episodes. !!READ 'Possible problems.' BELOW!!
+Put php files and css file excluding 'readme.md' and '.gitattributes' together or combine them into one file and drop them into directory with episodes. !!READ 'Possible problems.' BELOW!!
 (you can put .php file as function instead of calling it I just made it outside for fun)
 Just put the files inside 'manga name here' folder containing Episodes.
 Of course the folder should be placed into htdocs - for example: 'xampp\htdocs\your manga here' or other folder designed for http server.
@@ -24,7 +24,7 @@ If you set up custom port you need to include it. For example: 'localhost:88'.
 ## Possible problems.
 I wrote it on Windows for windows, I didn't test it on Linux. It should be fine.
 
-If you combine those 3 files into one file remove -3 from below code and type -1 instead. 
+If you combine those 3 files (images.php | index.php | style.css) into one file remove -3 from below code and type -1 instead. 
 ```sh
 for($i = 0; $i < $filecount-3; $i++)
 ```
@@ -42,6 +42,12 @@ $directory = "Episode ".$ep_number;
 - index.php
 ```sh
 img.setAttribute('src', 'Episode '+ep_number+"/"+file_array[i]);
+```
+
+If the file format for your 'images' is not supported like '.gif', you can just simply add in here:
+- images.php
+```sh
+$images = preg_grep('~\.(jpeg|jpg|png|webp)$~', scandir($directory));
 ```
 
 Have fun reading your manga offline!
