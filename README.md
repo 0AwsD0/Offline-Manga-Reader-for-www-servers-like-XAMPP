@@ -1,3 +1,4 @@
+
 # Offline Manga reader - for www servers like XAMMP
 ## Because I have a strange habit of saving everything I like offline...
 I made it for myself since I just wanted to read certain manga even if my internet is gone, or manga is deleted from internet for strange reason. 
@@ -20,31 +21,50 @@ And http server should be online.
 Open browser type 'http://localhost/' or just 'localhost' into your search bar and navigate into your manga folder or enter it manually.
 For example, 'localhost/MANGA/Manga name here/'.
 If you set up custom port you need to include it. For example: 'localhost:88'.
+Folders containing manga must end with INTEGER type number. The folders like 'Chapter 21.1' will create some problems: read 'Possible problems.' below. 
 
+REMAMBER NOT TO PUT: '.gitattributes' AND 'README.md' INTO YOUR MANGA FOLDER!
+
+Proper 'tree' (where to put the files):
+```sh
+│   images.php
+│   index.php
+│   style.css
+│
+├───Chapter 1
+│       01.jpg
+│       02.jpg
+│       03.jpg
+│
+├───Chapter 2
+│       01.jpg
+│       02.jpg
+│       03.jpg
+│
+├───Chapter X
+│       01.jpg
+│       02.jpg
+│       03.jpg
+```
 ## Possible problems.
-I wrote it on Windows for windows, I didn't test it on Linux. It should be fine.
+I wrote it for PC use, so it's not optimized towards mobile devices. (style.css)
 
 If you combine those 3 files (images.php | index.php | style.css) into one file remove -3 from below code and type -1 instead. 
 ```sh
 for($i = 0; $i < $filecount-3; $i++)
 ```
 
-As shown below the hard-coded name for folders containing image files for manga is constructed like this: 'Episode X'
-That requires you to have folders named properly: 'Episode 1' 'Episode 2' ... 'Episode 171' ...
-I made it that way because downloader that I use - HakuNeko Desktop - is making folders like that while downloading manga. //not always - sometimes it goes 'Chapter X' etc. - replace 'Episode ' witch 'Chapter ' in code below:
-- images.php
+Your folders must end with INTEGER type number. The folders like 'Chapter 21.1' will be counted, but will not be displayed correctly due to inner workings of the script. The folders will be just skipped, but willcreate additional 'dead' episode buttons on the top of the website. Use program, like 'Advanced Renamer' to rename all folders accordingly.
 ```sh
-$directory = "Episode ".$ep_number;
-                 $filecount = count(scandir($directory, SCANDIR_SORT_DESCENDING));
-                 $images = preg_grep('~\.(jpeg|jpg|png)$~', scandir($directory));
-                 echo(json_encode($images));
-```
-- index.php
-```sh
-img.setAttribute('src', 'Episode '+ep_number+"/"+file_array[i]);
+https://www.advancedrenamer.com/ | Free tool to rename your folders. 
+1. Drag and drop all folders containing images into programm window.
+2. Select proper option to only import dragged folders, excluding files and directories inside them.
+3. Into 'New Name' enter 'Episode <Inc Nr:1:1>'. 
+4. Click 'START' and you are ready to go!
+
 ```
 
-If the file format for your 'images' is not supported like '.gif', you can just simply add in here:
+If the file format for your 'images' is not supported ~ like '.gif', you can just simply add it in here:
 - images.php
 ```sh
 $images = preg_grep('~\.(jpeg|jpg|png|webp)$~', scandir($directory));
