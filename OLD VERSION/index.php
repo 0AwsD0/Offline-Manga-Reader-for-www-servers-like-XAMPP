@@ -10,35 +10,31 @@
 <body>
 <div id="list">
 <?php
-
              $directory = "";
-             $file = glob("" . "*");
-             natsort($file);
-             $filecount =  count(glob("" . "*"));
-
-             $i = 0;
+             $filecount = count(glob("" . "*"));
 
              try{
-                foreach($file as $folder){
-                    $i++;
-                    if($i <= ($filecount-3)){
-                        ?>
-                            <button class="episode_button" id="<?php echo($i); ?>" onclick="load_images('<?php echo($folder); ?>');episode_id(<?php echo($i); ?>);"> <?php echo($folder); ?> </button>
-                        <?php
-                    }
+                for($i = 0; $i < $filecount-3; $i++){
+                    ?>
+                        <button class="episode_button" onclick="load_images(<?php echo($i+1); ?>);"> <?php echo($i+1); ?> </button>
+                    <?php
                 }
              }
              catch(Exception $e){
                 echo("END ".$e);
              }
 
-?>
+        ?>
 </div>
     <div id="holder">
         <div id="init_settings">
-            <h1>This text will vanish after properly loading the images.</h1>
+            <h1>Settings below (and this text) will vanish after properly loading the images. If folders containing your manga are starting with 'Chapter', click the 'Change folders prefix to 'Chapter'' button. For anything else: enter value into text field below and click 'Change prefix to value below'. Default value is 'Episode'. The space is added by the script! Do not add space to the field below.</h1>
+            <h1>Remember to name folders correctly! The folders containing '.' ~like '21.1' will not work. The folders have to end with INTIGER type number to properly work here. You can rename them by programs like 'Advance Renamer'. There is a chance I will add support for this and other cases in the future. </h1>
             <h1>Use 'Ctrl'+'mouse wheel' to make images (website) bigger or smaller.</h1>
-            <h1>If you encounter any problems visit https://github.com/0AwsD0/Offline-Manga-Reader-for-www-servers-like-XAMPP </h1>
+            <div class="chapter_button" onclick="set_folder_prefix('Chapter ');">Change folders prefix to 'Chapter'</div>
+            <div class="chapter_button" onclick="set_folder_prefix('Episode ');">Change folders prefix to 'Episode' (Default)</div>
+            <div class="chapter_button" onclick="set_folder_prefix(document.getElementById('prefix').value+' ');">Change folders prefix to value below</div>
+                <input type="text" name="prefix" id="prefix">
         </div>
     </div>
     </div>
@@ -48,17 +44,16 @@
 
     <script>
 
-            let ep_id = 0;
-
-            function episode_id(id){
-                ep_id = id;
+            folder_prefix = "Episode ";
+            function set_folder_prefix(prefix){
+                folder_prefix = prefix;
             }
 
-            function img_number(directory){
+            function img_number(ep_number){
                 xmlhttp = new XMLHttpRequest();
                 xmlhttp.open("POST", "images.php", true);
                 xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xmlhttp.send("directory="+directory);
+                xmlhttp.send("ep_number="+ep_number+"&"+"folder_prefix="+folder_prefix);
                 //setTimeout(() => { console.log(xmlhttp.response);}, 500);
                 setTimeout(() => {
 
@@ -85,7 +80,7 @@
                                 const div = document.createElement("div");
                                 const img = document.createElement("img");
 
-                                img.setAttribute('src', directory+"/"+file_array[i]);
+                                img.setAttribute('src', 'Chapter '+ep_number+"/"+file_array[i]);
                                 img.setAttribute('class', 'diaplay');
 
                                 div.setAttribute('class', 'imgholder');
@@ -107,12 +102,7 @@
             rtn.innerHTML="Return to top. Curently EP: "+ep_number;
 
             const nxt = document.querySelector("#next_ep");
-            nxt.onclick = function(){
-                                        document.getElementById(ep_id+1).click();
-                                        //THE FLOW OF ABOVE CODE = every episode button have its ID from PHP loop ($i). When clicking the episode the function changes variable "ep_id" to corresponding div id (episode_id).
-                                        //That allows the code above to work, but why I need it? - natural sorted array made by php function on the begging do not reassign keys in order (you can see this by inserting 'print_r($file);' on line 17),
-                                        //so I had to do this work around by numbering BY ID the divs handling episodes so I can reliably determine next chapter to load.
-                                    };
+            nxt.onclick = function(){load_images(ep_number+1);};
         }
     </script>
 </html>
