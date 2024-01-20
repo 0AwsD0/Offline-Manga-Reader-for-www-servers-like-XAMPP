@@ -39,6 +39,7 @@
             <h1>This text will vanish after properly loading the images.</h1>
             <h1>Use 'Ctrl'+'mouse wheel' to make images (website) bigger or smaller.</h1>
             <h1>If you encounter any problems visit https://github.com/0AwsD0/Offline-Manga-Reader-for-www-servers-like-XAMPP </h1>
+            <h1>...or try files from 'OLD VERSION' directory - remember to read its readme.md! </h1>
         </div>
     </div>
     </div>
