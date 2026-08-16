@@ -23,7 +23,7 @@
                     $i++;
                     if($i <= ($filecount-3)){
                         ?>
-                            <button class="episode_button" id="<?php echo($i); ?>" onclick="load_images('<?php echo($folder); ?>');episode_id(<?php echo($i); ?>);"> <?php echo($folder); ?> </button>
+                            <button class="episode_button" id="<?php echo($i); ?>"  data-folder="<?php echo htmlspecialchars($folder, ENT_QUOTES, 'UTF-8'); ?>" onclick="load_images(this.dataset.folder);episode_id(<?php echo($i); ?>);"> <?php echo($folder); ?> </button>
                         <?php
                     }
                 }
@@ -59,10 +59,10 @@
                 xmlhttp = new XMLHttpRequest();
                 xmlhttp.open("POST", "images.php", true);
                 xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xmlhttp.send("directory="+directory);
+                xmlhttp.send("directory=" + encodeURIComponent(directory));
                 //setTimeout(() => { console.log(xmlhttp.response);}, 500);
-                setTimeout(() => {
-
+                //setTimeout(() => {
+                xmlhttp.onload = function() {
                             file_list = xmlhttp.response;
                             console.log(file_list);
 
@@ -86,7 +86,7 @@
                                 const div = document.createElement("div");
                                 const img = document.createElement("img");
 
-                                img.setAttribute('src', directory+"/"+file_array[i]);
+                                img.src = encodeURIComponent(directory) + "/" + encodeURIComponent(file_array[i]);
                                 img.setAttribute('class', 'diaplay');
 
                                 div.setAttribute('class', 'imgholder');
@@ -94,7 +94,8 @@
                                 div.appendChild(img);
                                 containing.appendChild(div);
                             }
-                    ;}, 500);
+                        };
+                    //;}, 500);
 
             }
 
